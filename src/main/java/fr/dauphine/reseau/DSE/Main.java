@@ -1,4 +1,4 @@
-package com.company;
+package fr.dauphine.reseau.DSE;
 
 public class Main {
 

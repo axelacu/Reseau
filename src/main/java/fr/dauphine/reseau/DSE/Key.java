@@ -1,4 +1,4 @@
-package com.company;
+package fr.dauphine.reseau.DSE;
 
 public class Key implements Cloneable{
 	boolean key[];

@@ -1,4 +1,4 @@
-package com.company;
+package fr.dauphine.reseau.DSE;
 import javax.security.auth.kerberos.KerberosTicket;
 import java.util.ArrayList;
 
