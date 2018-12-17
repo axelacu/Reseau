@@ -50,7 +50,12 @@ public class Key implements Cloneable{
 		return key.length;
 	}
 
-
-
-
+	@Override
+	public String toString() {
+		String result="";
+		for(int i=0;i<10;i++) {
+			result+=this.key[i]?"1":"0";
+		}
+		return result;
+	}
 }

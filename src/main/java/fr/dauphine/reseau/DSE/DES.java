@@ -47,17 +47,16 @@ public class DES {
 		for(int i = key.size() - 1,j = (key.size()/2) - 1 ; j>0 ; i--,j--){
 			newKey[i - 1] = key.key[i];
 			newKey[j-1] = key.key[j];
-			System.out.println(i + ", " + j );
 		}
 		//adding first of two list
 		newKey[key.size()/2 - 1] = key.key[0];
-		newKey[key.size()-1] = key.key[(key.size()/2) - 1];
+		newKey[key.size()-1] = key.key[(key.size()/2)];
+
 		return new Key(newKey);
 	}
 	public Key LS2(Key key){
-		key=LS1(key);
-		key=LS1(key);
-		return key;
+		DES des = new DES();
+		return des.LS1(des.LS1(key));
 	}
 	public ArrayList KeyGen() {
 		return null;
@@ -111,10 +110,20 @@ public class DES {
 
 		Key key = new Key("1010000010");
 		DES des = new DES();
-		for(boolean b : key.key)
-			System.out.print(b + ", ");
+		Key p10 =des.P10(key);
+		System.out.println("P10 : "  + p10);
+		Key ls1 = des.LS1(p10);
+		System.out.println("LS1 : " + ls1);
+		Block k1 = des.P8(ls1);
+		System.out.println("P8 : "  + k1);
+		Key ls2 = des.LS2(ls1);
+		System.out.println("LS2 : "  + ls2);
+		Block k2 = des.P8(ls2);
+		System.out.println("Block : " + k2);
+
+		/*
 		for(boolean b : des.LS1(key).key)
-			System.out.print(b + ", ");
+			System.out.print(b + ", ");*/
 
 		/*
 		DES crypto=null;
