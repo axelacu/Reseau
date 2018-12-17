@@ -29,8 +29,18 @@ public class DES {
 		return new Key(newKey);
 	}
 	public Block P8(Key key) {
-
-		return null;
+		boolean[] block = new boolean[8];
+		int count = 0;
+		for(int i : p8){
+			block[count] = key.key[i-1];
+			count++;
+		}
+		try {
+			return new Block(block);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	public Key LS1(Key key){
 		boolean[] newKey = new boolean[key.size()];
@@ -98,11 +108,17 @@ public class DES {
 	public static void main(String[] args) throws Exception {
 
 		Key key = new Key("1010000010");
+
 		DES des = new DES();
-		for(boolean b : key.key)
+		Key p10 = des.P10(key);
+		Key ls1 = des.LS1(p10);
+		Block nkey = des.P8(ls1);
+
+		for(boolean b : nkey.block)
 			System.out.print(b + ", ");
-		for(boolean b : des.LS1(key).key)
-			System.out.print(b + ", ");
+
+		/*for(boolean b : des.LS1(key).key)
+			System.out.print(b + ", ");*/
 
 		/*
 		DES crypto=null;
