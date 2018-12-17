@@ -2,12 +2,20 @@ package fr.dauphine.reseau.DSE;
 
 public class Key implements Cloneable{
 	boolean key[];
+
+
 	public Key() {
 		this.key=new boolean[10];
 	}
+
+
+
 	public Key(boolean[] key){
 		this.key = key;
 	}
+
+
+
 	public Key(String s) throws Exception{
 		this();
 		if(s.length()!=10)
@@ -28,13 +36,21 @@ public class Key implements Cloneable{
 	public void setKey(boolean[] key){
 		this.key = key;
 	}
+
+
 	public Key clone() {
 		Key clone=new Key();
 		for(int i=0;i<10;i++)
 			clone.key[i]=this.key[i];
 		return clone;
 	}
+
+
 	public int size(){
 		return key.length;
 	}
+
+
+
+
 }

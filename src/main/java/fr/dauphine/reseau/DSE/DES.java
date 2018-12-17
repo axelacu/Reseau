@@ -55,7 +55,9 @@ public class DES {
 		return new Key(newKey);
 	}
 	public Key LS2(Key key){
-		return null;
+		key=LS1(key);
+		key=LS1(key);
+		return key;
 	}
 	public ArrayList KeyGen() {
 		return null;
@@ -108,17 +110,11 @@ public class DES {
 	public static void main(String[] args) throws Exception {
 
 		Key key = new Key("1010000010");
-
 		DES des = new DES();
-		Key p10 = des.P10(key);
-		Key ls1 = des.LS1(p10);
-		Block nkey = des.P8(ls1);
-
-		for(boolean b : nkey.block)
+		for(boolean b : key.key)
 			System.out.print(b + ", ");
-
-		/*for(boolean b : des.LS1(key).key)
-			System.out.print(b + ", ");*/
+		for(boolean b : des.LS1(key).key)
+			System.out.print(b + ", ");
 
 		/*
 		DES crypto=null;
