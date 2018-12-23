@@ -62,7 +62,18 @@ public class DES {
 		return null;
 	}
 	public Block IP(Block block){
-		return null;
+		boolean[] block1 = new boolean[8];
+		int count = 0;
+		for(int i : ip){
+			block1[count] = block.block[i-1];
+			count++;
+		}
+		try {
+			return new Block(block1);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	public Block FirstHalfChange(Block block,boolean[] halfBlock) {
 		return null;
@@ -134,5 +145,8 @@ public class DES {
 		}
 			Block encod=crypto.Encode();
 			Block decod=crypto.Decode(encod);*/
+
+		Block block =new Block("10010110");
+		System.out.println(des.IP(block));
 	}
 }
