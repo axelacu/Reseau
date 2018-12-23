@@ -9,6 +9,7 @@ public class DES {
 	public static int[] p10= {3,5,2,7,4,10,1,9,8,6};
 	public static int[] p8= {6,3,7,4,8,5,10,9};
 	public static int[] ip={2,6,3,1,4,8,5,7};
+	public static int[] ipINV={4,1,3,5,7,2,8,6};
 	public static int[] ep={4,1,2,3,2,3,4,1};
 	public static int[] p4={2,4,3,1};
 	public static int[][] s0={{1,0,3,2},{3,2,1,0},{0,2,1,3},{3,1,3,2}};
@@ -84,25 +85,90 @@ public class DES {
 
 
 	public Block IPinv(Block block){
-		return null;
+		boolean[] block1 = new boolean[8];
+		int count = 0;
+		for(int i : ipINV){
+			block1[count] = block.block[i-1];
+			count++;
+		}
+		try {
+			return new Block(block1);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	public Block EP(Block block){
-		return null;
+		boolean[] block1 = new boolean[8];
+		int count = 0;
+		for(int i : ep){
+			block1[count] = block.block[i-1];
+			count++;
+		}
+		try {
+			return new Block(block1);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	public Block XOR8(Block block,Block key){
-		return null;
+		boolean[] block1=new boolean[8];
+		for(int i=0; i<8;i++){
+			if(block.block[i]==key.block[i]){
+				block1[i]=false;
+			} else {
+				block1[i]=true;
+			}
+		}
+		try {
+			return new Block(block1);
+		}catch(Exception e) {
+			return null;
+		}
 	}
-	public boolean[] XOR4(Block block,boolean[] halfBlock){
+
+
+
+	public boolean[] XOR4(Block block,boolean[] halfBlock){ //TODO: peut etre deja commencer ???
 		return new boolean[]{true,false};
 	}
 	public int BoolToInt(boolean b0,boolean b1){
-		return 0;
+		int B0, B1;
+		if(b0==false){
+			B0=0;
+		} else {
+			B0=1;
+		}
+		if(b1==false){
+			B1=0;
+		} else {
+			B1=1;
+		}
+
+		return 2*B0+B1;
 	}
 	public boolean IntToBool0(int i){
-		return true;
+		String string=Integer.toBinaryString(i);
+		String[] s=string.split("");
+		if(s[string.length()-1].equals("1")){
+			return true;
+		} else {
+			return false;
+		}
 	}
+
+
+
+
 	public boolean IntToBool1(int i){
-		return true;
+		String string=Integer.toBinaryString(i);
+		String[] s=string.split("");
+		if(s[0].equals("1")){
+			return true;
+		} else {
+			return false;
+		}
 	}
 	public boolean[] S(Block block){
 		return null;
@@ -151,11 +217,19 @@ public class DES {
 			Block encod=crypto.Encode();
 			Block decod=crypto.Decode(encod);*/
 
-		Block block =new Block("10010110");
-		System.out.println(des.IP(block));
+		Block block =new Block("11110110");
+		System.out.println(des.IPinv(block));
 		boolean b[] = {true, true,true, true};
 		des.FirstHalfChange(block,b);
 		System.out.println(block);
+
+		Block block1 =new Block("11101010");
+		System.out.println(des.EP(block1));
+		System.out.println("---xor---");
+
+		System.out.println(des.XOR8(block,block1));
+		System.out.println("---binaire---");
+		System.out.println(des.IntToBool0(2));
 
 
 
