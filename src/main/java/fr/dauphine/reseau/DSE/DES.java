@@ -76,8 +76,13 @@ public class DES {
 		}
 	}
 	public Block FirstHalfChange(Block block,boolean[] halfBlock) {
-		return null;
+		for(int i=0; i<4;i++){
+			block.block[i]=halfBlock[i];
+		}
+		return block;
 	}
+
+
 	public Block IPinv(Block block){
 		return null;
 	}
@@ -148,5 +153,11 @@ public class DES {
 
 		Block block =new Block("10010110");
 		System.out.println(des.IP(block));
+		boolean b[] = {true, true,true, true};
+		des.FirstHalfChange(block,b);
+		System.out.println(block);
+
+
+
 	}
 }
