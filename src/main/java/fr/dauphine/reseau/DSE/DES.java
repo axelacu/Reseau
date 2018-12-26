@@ -14,12 +14,28 @@ public class DES {
 	public static int[] p4={2,4,3,1};
 	public static int[][] s0={{1,0,3,2},{3,2,1,0},{0,2,1,3},{3,1,3,2}};
 	public static int[][] s1={{0,1,2,3},{2,0,1,3},{3,0,1,2},{2,1,0,3}};
+
+	/**
+	 * constructeur qui se contente de créer un instance à partir des deux
+	 * paramètres.
+	 * @param block
+	 * @param key
+	 */
 	public DES(Block block,Key key) {
 		
 	}
+
+	/**
+	 * Constructeur par defaut.
+	 */
 	public DES(){
 	}
 
+	/**
+	 * applique la permutation P10 sur la clé (sans la modifier) et renvoie le résultat
+	 * @param key
+	 * @return
+	 */
 	public Key P10(Key key) {
 		boolean[] newKey = new boolean[key.key.length];
 		int count = 0;
@@ -29,6 +45,13 @@ public class DES {
 		}
 		return new Key(newKey);
 	}
+
+	/**
+	 * applique la permutation P8 sur la clé (sans la modifier) et renvoie le résultat sous la
+	 * forme d’un object de type Block (8 bits)
+	 * @param key
+	 * @return
+	 */
 	public Block P8(Key key) {
 		boolean[] block = new boolean[8];
 		int count = 0;
@@ -43,6 +66,13 @@ public class DES {
 			return null;
 		}
 	}
+
+	/**
+	 * effectue séparément le décalage à gauche d’un bit sur les deux blocks de 5 bits de la
+	 * clé (sans la modifier) et renvoie le résultat
+	 * @param key
+	 * @return
+	 */
 	public Key LS1(Key key){
 		boolean[] newKey = new boolean[key.size()];
 		for(int i = key.size() - 1,j = (key.size()/2) - 1 ; j>0 ; i--,j--){
@@ -55,13 +85,28 @@ public class DES {
 
 		return new Key(newKey);
 	}
+
+	/**
+	 *effectue séparément le décalage à gauche de deux bits sur les deux blocks de 5 bits de
+	 * la clé (sans la modifier) et renvoie le résultat
+	 *
+	 * @param key
+	 * @return
+	 */
 	public Key LS2(Key key){
 		DES des = new DES();
 		return des.LS1(des.LS1(key));
 	}
+	//TODO: Keygen
 	public ArrayList KeyGen() {
 		return null;
 	}
+
+	/**
+	 * applique la permutation IP sur le block (sans le modifier) et renvoie le résultat
+	 * @param block
+	 * @return
+	 */
 	public Block IP(Block block){
 		boolean[] block1 = new boolean[8];
 		int count = 0;
@@ -76,6 +121,14 @@ public class DES {
 			return null;
 		}
 	}
+
+	/**
+	 * remplace les 4 premiers bits de block par les
+	 * 4 bits de halfBlock
+	 * @param block
+	 * @param halfBlock
+	 * @return
+	 */
 	public Block FirstHalfChange(Block block,boolean[] halfBlock) {
 		for(int i=0; i<4;i++){
 			block.block[i]=halfBlock[i];
@@ -83,7 +136,12 @@ public class DES {
 		return block;
 	}
 
-
+	/**
+	 * applique la permutation inverse de IP sur le block (sans le modifier) et
+	 * renvoie le résultat
+	 * @param block
+	 * @return
+	 */
 	public Block IPinv(Block block){
 		boolean[] block1 = new boolean[8];
 		int count = 0;
@@ -98,6 +156,13 @@ public class DES {
 			return null;
 		}
 	}
+
+	/**
+	 * applique l’ extension/permutation E/P du block (sans le modifier) et renvoie le
+	 * résultat
+	 * @param block
+	 * @return
+	 */
 	public Block EP(Block block){
 		boolean[] block1 = new boolean[8];
 		int count = 0;
@@ -112,6 +177,13 @@ public class DES {
 			return null;
 		}
 	}
+
+	/**
+	 * effectue un XOR entre les deux blocks et renvoie le résultat
+	 * @param block
+	 * @param key
+	 * @return
+	 */
 	public Block XOR8(Block block,Block key){
 		boolean[] block1=new boolean[8];
 		for(int i=0; i<8;i++){
@@ -129,10 +201,27 @@ public class DES {
 	}
 
 
-
-	public boolean[] XOR4(Block block,boolean[] halfBlock){ //TODO: peut etre deja commencer ???
-		return new boolean[]{true,false};
+	/**
+	 * effectue un XOR entre deux tableau de booléens
+	 * de taille 4 et renvoie le résultat
+	 * @param block
+	 * @param halfBlock
+	 * @return
+	 */
+	public boolean[] XOR4(Block block,boolean[] halfBlock){
+		boolean[] res =new boolean[4];
+		for(int i=0; i<4;i++){
+			res[i] = block.block[i] ^ halfBlock[i] ;
+		}
+		return res;
 	}
+
+	/**
+	 * donne la valeur entière correspondant à 2 × b0 + b1
+	 * @param b0
+	 * @param b1
+	 * @return
+	 */
 	public int BoolToInt(boolean b0,boolean b1){
 		int B0, B1;
 		if(b0==false){
@@ -148,6 +237,14 @@ public class DES {
 
 		return 2*B0+B1;
 	}
+
+	/**
+	 * donne la valeur booléenne du bit le plus à gauche de la représentation
+	 * binaire de i (par exemple si i=2, la représentation binaire est 01 et la valeur retournée est 0)
+	 * @param i
+	 * @return
+	 */
+	//TODO : Axel : A discuter de cette fonction, je pense qu'elle n'est pas bonne. Tu as pris le bit le plus à droite et non pas à gauche.
 	public boolean IntToBool0(int i){
 		String string=Integer.toBinaryString(i);
 		String[] s=string.split("");
@@ -158,11 +255,16 @@ public class DES {
 		}
 	}
 
-
-
-
+	/**
+	 *donne la valeur booléenne du bit le plus à droite de la représentation
+	 * binaire de i (par exemple si i=2, la représentation binaire est 01 et la valeur retournée est 1)
+	 * @param i
+	 * @return
+	 */
+	//TODO : Axel : même chose que la précédente sauf que prendre la plus à droit.
 	public boolean IntToBool1(int i){
 		String string=Integer.toBinaryString(i);
+		//TODO  : Enlever la transformation du tableau augmente la complexité.
 		String[] s=string.split("");
 		if(s[0].equals("1")){
 			return true;
@@ -170,21 +272,36 @@ public class DES {
 			return false;
 		}
 	}
+
+	/**
+	 * applique la fonction S0 aux 4 premiers bits de block, et la fonction S1 aux 4
+	 * derniers bits de block, et renvoie le résultat sous la forme d’un tableau de 4 booléens (les 2 premiers
+	 * booléens correspondent à S0, et les 2 suivants à S1)
+	 * @param block
+	 * @return
+	 */
+
+	//TODO : Ania
 	public boolean[] S(Block block){
 		return null;
 	}
+	//TODO : Ania
 	public boolean[] P4(boolean[] halfBlock){
 		return null;
 	}
+	//TODO : Ania
 	public Block SW(Block block,boolean[] halfBlock){
 		return null;
 	}
+	//TODO : Ania
 	public boolean[] FK(Block block,Block key){
 		return null;
 	}
+	//TODO : Ania
 	public Block Encode(){
 		return null;
 	}
+	//TODO : Ania
 	public Block Decode(Block block){
 		return null;
 	}
