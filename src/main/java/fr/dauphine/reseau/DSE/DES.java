@@ -24,7 +24,9 @@ public class DES {
 	public DES(Block block,Key key) {
 		
 	}
-
+	public DES(Key key) {
+		this.key = key;
+	}
 	/**
 	 * Constructeur par defaut.
 	 */
@@ -97,9 +99,32 @@ public class DES {
 		DES des = new DES();
 		return des.LS1(des.LS1(key));
 	}
-	//TODO: Keygen
+
+	/**
+	 * génère les deux sous-clés qui sont stockées dans une ArrayList qui est retournés
+	 * par la fonction
+	 * @return
+	 */
 	public ArrayList KeyGen() {
-		return null;
+		ArrayList<Block> keyGen = new ArrayList<>();
+		//copy the key given in parameter.
+		Key key = this.key.clone();
+		//permutation 10
+		Key p10 = P10(key);
+		//LS1 function
+		Key ls1 = LS1(p10);
+		//Producing first key.
+		Block k1 = P8(ls1);
+		//LS2 function.
+		Key ls2 = LS2(ls1);
+		//Producing key 2
+		Block k2 = P8(ls2);
+
+		//adding two key.
+		keyGen.add(k1);
+		keyGen.add(k2);
+
+		return keyGen;
 	}
 
 	/**
@@ -285,9 +310,21 @@ public class DES {
 	public boolean[] S(Block block){
 		return null;
 	}
-	//TODO : Ania
+
+	/**
+	 * applique la permutation P4 sur un tableau de booléens de taille 4
+	 * (sans le modifier) et renvoie le résultat.
+	 * @param halfBlock
+	 * @return
+	 */
 	public boolean[] P4(boolean[] halfBlock){
-		return null;
+		boolean[] res = new boolean[4];
+		int count = 0;
+		for(int i : p4){
+			res[count] = halfBlock[i-1];
+			count++;
+		}
+		return res;
 	}
 	//TODO : Ania
 	public Block SW(Block block,boolean[] halfBlock){
@@ -308,17 +345,9 @@ public class DES {
 	public static void main(String[] args) throws Exception {
 
 		Key key = new Key("1010000010");
-		DES des = new DES();
-		Key p10 =des.P10(key);
-		System.out.println("P10 : "  + p10);
-		Key ls1 = des.LS1(p10);
-		System.out.println("LS1 : " + ls1);
-		Block k1 = des.P8(ls1);
-		System.out.println("P8 : "  + k1);
-		Key ls2 = des.LS2(ls1);
-		System.out.println("LS2 : "  + ls2);
-		Block k2 = des.P8(ls2);
-		System.out.println("Block : " + k2);
+		DES des = new DES(key);
+
+		System.out.println("Key Generation : " + des.KeyGen());
 
 		/*
 		for(boolean b : des.LS1(key).key)
