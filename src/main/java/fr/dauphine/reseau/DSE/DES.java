@@ -269,11 +269,10 @@ public class DES {
 	 * @param i
 	 * @return
 	 */
-	//TODO : Axel : A discuter de cette fonction, je pense qu'elle n'est pas bonne. Tu as pris le bit le plus à droite et non pas à gauche.
 	public boolean IntToBool0(int i){
 		String string=Integer.toBinaryString(i);
 		String[] s=string.split("");
-		if(s[string.length()-1].equals("1")){
+		if(s[0].equals("1")){
 			return true;
 		} else {
 			return false;
@@ -286,12 +285,10 @@ public class DES {
 	 * @param i
 	 * @return
 	 */
-	//TODO : Axel : même chose que la précédente sauf que prendre la plus à droit.
 	public boolean IntToBool1(int i){
 		String string=Integer.toBinaryString(i);
-		//TODO  : Enlever la transformation du tableau augmente la complexité.
 		String[] s=string.split("");
-		if(s[0].equals("1")){
+		if(s[s.length - 1].equals("1")){
 			return true;
 		} else {
 			return false;
