@@ -21,7 +21,7 @@ public class DES {
      * paramètres.
      *
      * @param block block to encode
-     * @param key key to code
+     * @param key   key to code
      */
     public DES(Block block, Key key) {
         this.key = key;
@@ -90,6 +90,7 @@ public class DES {
             newKey[i - 1] = key.key[i];
             newKey[j - 1] = key.key[j];
         }
+
         //adding first of two list
         newKey[key.size() / 2 - 1] = key.key[0];
         newKey[key.size() - 1] = key.key[(key.size() / 2)];
@@ -522,15 +523,15 @@ public class DES {
         Key key = new Key("1010000010");
 
         Block b = new Block("10111101");
-        DES des = new DES(b,key);
+        DES des = new DES(b, key);
+        System.out.println("Plaintext : " + b);
 
+        Block BLOCK = des.Encode();
+        System.out.println("Encode : " + BLOCK);
 
-        Block BLOCK= des.Encode();
-        System.out.println("Encode :  " + BLOCK);
-
-        Block res=des.Decode(BLOCK);
+        Block res = des.Decode(BLOCK);
         System.out.println("DECODE : " + res);
 
-
+        System.out.println("Fin");
     }
 }
