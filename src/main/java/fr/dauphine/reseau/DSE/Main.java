@@ -2,7 +2,7 @@ package fr.dauphine.reseau.DSE;
 
 public class Main {
 
-    public static void main(String[] args) throws Exception{
+    public static void main(String[] args) throws Exception {
 
         Key key = new Key("1010000010");
 
@@ -15,5 +15,7 @@ public class Main {
 
         Block res = des.Decode(BLOCK);
         System.out.println("DECODE : " + res);
+
+        System.out.println("Fin");
     }
 }
