@@ -1,0 +1,10 @@
+*** Ceci correspond au prohet de Axel Acuna, Shirel Matti, Ania Bouadi ***
+
+Il a été fait sous forme d'un Maven pour faciliter la lecture dans le IDE tel que / NetBin, Eclipe, IntelliJ,etc.
+
+
+rappels des commandes : "mvn package", "mvn compile" et "java -cp target/classes/ fr.dauphine.reseau.DSE.Main" //Main class
+
+
+Le main est dans Main.
+Bon execution !
